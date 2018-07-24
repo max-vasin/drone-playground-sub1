@@ -2,4 +2,6 @@ pipeline:
   simulation:
     image: node:9
     commands:
-      - echo 'building dependency project 1'
+      - echo "building dependency project 1"
+      - echo "Uppercase: ${RESOLVE_COMMIT}"
+      - echo "Lowercase: ${resolve_commit}"
