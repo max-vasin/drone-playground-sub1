@@ -1,7 +1,11 @@
 pipeline:
-  simulation:
+  nightly:
+    image: maxvasin/resolve-docker
+    commands:
+      - /scripts/package_json patch_dependencies resolve-* $NIGHTLY_VERSION
+      - npm install
+
+  tests:
     image: node:9
     commands:
-      - echo building dependency project 1
-      - echo Uppercase $NIGHTLY_VERSION
-      - echo Lowercase $nightly_version
+      - cat ./package.json
