@@ -4,9 +4,7 @@ pipeline:
     pull: true
     commands:
       - if [ -z $NIGHTLY_VERSION ]; then exit 0; fi
-      - echo NIGHTLY_REPO=$DRONE_REPO_NAME >> .params
-      - echo NIGHTLY_VERSION=$NIGHTLY_VERSION >> .params
-      - echo NIGHTLY_CHECK=$(/scripts/package_json name) >> .params
+      - echo NIGHTLY_BUILD_REPO=$DRONE_REPO >> .params
       - /scripts/package_json patch-dependencies @badgeteam/drone-fake $NIGHTLY_VERSION
       - cat .params
 
@@ -27,11 +25,18 @@ pipeline:
     fork: true
     wait: true
     repositories:
-      - max-vasin/drone-playground-sub1@master
+      - max-vasin/resolve-publisher
 
     secrets: [ downstream_token ]
     params:
       - .params
+      - NIGHTLY_BUILD_STATUS=${DRONE_BUILD_STATUS}
+
+    params-from-env:
+      - NIGHTLY_VERSION
+      - NIGHTLY_PACKAGE
+
+
 
 
 
