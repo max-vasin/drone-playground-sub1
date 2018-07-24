@@ -10,4 +10,4 @@ pipeline:
   tests:
     image: node:9
     commands:
-      - cat ./package.json
+      - cat ./node_modules/@badgeteam/drone-fake/package.json
