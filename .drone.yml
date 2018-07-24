@@ -3,5 +3,5 @@ pipeline:
     image: node:9
     commands:
       - echo building dependency project 1
-      - echo Uppercase ${NIGHTLY_VERSION}
-      - echo Lowercase ${nightly_version}
+      - echo Uppercase $NIGHTLY_VERSION
+      - echo Lowercase $nightly_version
