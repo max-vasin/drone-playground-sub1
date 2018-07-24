@@ -3,7 +3,7 @@ pipeline:
     image: maxvasin/resolve-docker
     pull: true
     commands:
-      - /scripts/package_json patch_dependencies resolve-* $NIGHTLY_VERSION
+      - /scripts/package_json patch_dependencies @badgeteam/drone-fake $NIGHTLY_VERSION
       - npm install
 
   tests:
