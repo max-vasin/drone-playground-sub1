@@ -19,6 +19,7 @@ pipeline:
 
   nightly_notify:
     image: node:9
+    commands:
       - if [ -z $NIGHTLY_VERSION]; then exit 0; fi
       - echo Notifying publisher...
 
