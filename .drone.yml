@@ -30,8 +30,8 @@ pipeline:
 
     secrets: [ downstream_token ]
     params:
-      - ./.params
-      - NIGHTLY_BUILD_STATUS=${DRONE_BUILD_STATUS}
+      - .params
+      - NIGHTLY_BUILD_STATUS="${DRONE_BUILD_STATUS=missed}"
 
     params-from-env:
       - NIGHTLY_VERSION
