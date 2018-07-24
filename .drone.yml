@@ -47,11 +47,6 @@ pipeline:
     secrets: [ downstream_token ]
     params:
       - .nightly
-
-    params-from-env:
-      - NIGHTLY_VERSION
-      - NIGHTLY_PACKAGE
-
     when:
       status: [ success, failure ]
 
