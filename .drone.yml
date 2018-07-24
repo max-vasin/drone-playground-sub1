@@ -6,6 +6,8 @@ pipeline:
       - touch .params
       - if [ -z $NIGHTLY_VERSION ]; then exit 0; fi
       - echo NIGHTLY_BUILD_REPO=$DRONE_REPO >> .nightly
+      - echo NIGHTLY_PACKAGE=$NIGHTLY_PACKAGE >> .nightly
+      - echo NIGHTLY_VERSION=$NIGHTLY_VERSION >> .nightly
       - /scripts/package_json patch-dependencies @badgeteam/drone-fake $NIGHTLY_VERSION
       - cat .params
 
@@ -23,9 +25,7 @@ pipeline:
   build_success:
     image: node:9
     commands:
-      - cat .nightly
       - echo NIGHTLY_BUILD_STATUS=success >> .nightly
-      - cat .nightly
     when:
       status: [ success ]
 
