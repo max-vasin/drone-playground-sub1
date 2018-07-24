@@ -29,7 +29,7 @@ pipeline:
 
     secrets: [ downstream_token ]
     params:
-      - .params
+      - ./.params
       - NIGHTLY_BUILD_STATUS=${DRONE_BUILD_STATUS}
 
     params-from-env:
