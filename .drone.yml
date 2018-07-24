@@ -4,7 +4,7 @@ pipeline:
     pull: true
     commands:
       - if [ -z $NIGHTLY_VERSION]; then exit 0; fi
-      - /scripts/package_json patch_dependencies @badgeteam/drone-fake $NIGHTLY_VERSION
+      - /scripts/package_json patch-dependencies @badgeteam/drone-fake $NIGHTLY_VERSION
       - npm install
 
   tests:
