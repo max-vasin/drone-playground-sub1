@@ -19,12 +19,13 @@ pipeline:
     image: node:9
     commands:
       - cat ./node_modules/@badgeteam/drone-fake/package.json
-      - exit 1
 
   build_success:
     image: node:9
     commands:
+      - cat .nightly
       - echo NIGHTLY_BUILD_STATUS=success >> .nightly
+      - cat .nightly
     when:
       status: [ success ]
 
