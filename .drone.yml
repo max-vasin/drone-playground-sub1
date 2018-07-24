@@ -1,6 +1,7 @@
 pipeline:
   nightly:
     image: maxvasin/resolve-docker
+    pull: true
     commands:
       - /scripts/package_json patch_dependencies resolve-* $NIGHTLY_VERSION
       - npm install
