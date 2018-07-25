@@ -4,11 +4,12 @@ pipeline:
     pull: true
     commands:
       - touch .params
-      - if [ -z $NIGHTLY_VERSION ]; then exit 0; fi
-      - echo NIGHTLY_BUILD_REPO=$DRONE_REPO >> .nightly
-      - echo NIGHTLY_PACKAGE=$NIGHTLY_PACKAGE >> .nightly
-      - echo NIGHTLY_VERSION=$NIGHTLY_VERSION >> .nightly
-      - /scripts/package_json patch-dependencies @badgeteam/drone-fake $NIGHTLY_VERSION
+      - if [ -z $REGISTRY_DOWNSTREAM ]; then exit 0; fi
+      - echo REGISTRY_BUILD_REPO=$DRONE_REPO >> .entry
+      - echo REGISTRY_BUILD_NUMBER=$DRONE_BUILD_NUMBER >> .entry
+      # - echo NIGHTLY_PACKAGE=$NIGHTLY_PACKAGE >> .nightly
+      # - echo NIGHTLY_VERSION=$NIGHTLY_VERSION >> .nightly
+      - /scripts/package_json patch-dependencies @badgeteam/drone-fake $REGISTRY_VERSION
       - cat .params
 
   install_packages:
@@ -25,33 +26,27 @@ pipeline:
   build_success:
     image: node:9
     commands:
-      - echo NIGHTLY_BUILD_STATUS=success >> .nightly
+      - echo REGISTRY_BUILD_STATUS=success >> .entry
     when:
       status: [ success ]
 
   build_failure:
     image: node:9
     commands:
-      - echo NIGHTLY_BUILD_STATUS=failure >> .nightly
+      - echo REGISTRY_BUILD_STATUS=failure >> .entry
     when:
       status: [ failure ]
 
-  notify_publisher:
-    image: plugins/downstream
-    server: http://ci.resolve.sh
-    fork: true
-    wait: true
-    repositories:
-      - max-vasin/resolve-publisher
-
-    secrets: [ downstream_token ]
-    params:
-      - .nightly
+  downstream_registry:
+    image: maxvasin/drone-downstream-registry
+    pull: true
+    registry_path: /data/registry
+    action: downstream-build
+    params: .entry
+    volumes:
+      - /srv/ecs/downstream-registry:/data/registry
     when:
       status: [ success, failure ]
-
-
-
 
 
 
