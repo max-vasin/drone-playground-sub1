@@ -11,7 +11,6 @@ pipeline:
     commands:
       - npm install
 
-
   test:
     image: node:9
     commands:
