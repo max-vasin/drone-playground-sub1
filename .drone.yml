@@ -21,6 +21,8 @@ pipeline:
     pull: true
     registry_path: /data/registry
     action: downstream-build
+    server: http://ci.resolve.sh
+    secrets: [ secret_server_token ]
     volumes:
       - /srv/ecs/downstream-registry:/data/registry
     when:
